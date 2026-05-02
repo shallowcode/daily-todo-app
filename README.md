@@ -12,10 +12,14 @@
 
 ## ⬇️ 下载
 
-去 [Releases](https://github.com/shallowcode/daily-todo-app/releases/latest) 页面：
+去 [Releases](https://github.com/shallowcode/daily-todo-app/releases/latest) 页面下载：
 
-- **每日待办 Setup x.x.x.exe** — NSIS 安装包，自动创建桌面快捷方式 + 开始菜单项 + 卸载程序
-- **每日待办-portable-x.x.x.exe** — 便携版，单文件，双击即用，免安装
+| 文件 | 说明 |
+| --- | --- |
+| **daily-todo-Setup-x.x.x.exe** | NSIS 安装包，自动创建桌面快捷方式 + 开始菜单项，可在控制面板卸载 |
+| **daily-todo-portable-x.x.x.exe** | 便携版，单文件，双击即用，免安装 |
+
+> 仅支持 Windows 10/11 x64。应用未做代码签名，首次启动若被 SmartScreen 拦截，请点击"更多信息" → "仍要运行"。
 
 ## ✨ 特性
 
