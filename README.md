@@ -2,6 +2,21 @@
 
 一个轻量、可置顶、模块化的个人每日待办桌面应用（Electron）。
 
+<p align="center">
+  <img src="assets/icon.png" width="120" alt="Logo" />
+</p>
+
+<p align="center">
+  <img src="assets/screenshot.png" width="380" alt="Screenshot" />
+</p>
+
+## ⬇️ 下载
+
+去 [Releases](https://github.com/shallowcode/daily-todo-app/releases/latest) 页面：
+
+- **每日待办 Setup x.x.x.exe** — NSIS 安装包，自动创建桌面快捷方式 + 开始菜单项 + 卸载程序
+- **每日待办-portable-x.x.x.exe** — 便携版，单文件，双击即用，免安装
+
 ## ✨ 特性
 
 - **小巧悬浮窗口**（380×600，可调大小，圆角玻璃质感）
