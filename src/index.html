@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>每日待办</title>
+  <!-- 字体：英文/数字用 Inter，中文用 HarmonyOS Sans SC（按 unicode-range 分包，按需下载） -->
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/harmonyos-sans-sc-webfont-splitted@1.1.0/dist/index.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5.0.18/index.css">
+  <link rel="stylesheet" href="styles/tokens.css" />
+  <link rel="stylesheet" href="styles/base.css" />
+  <link rel="stylesheet" href="styles/titlebar.css" />
+  <link rel="stylesheet" href="styles/tasks.css" />
+  <link rel="stylesheet" href="styles/calendar.css" />
+  <link rel="stylesheet" href="styles/settings.css" />
+</head>
+<body>
+  <div class="app">
+    <!-- ============ 自定义标题栏 ============ -->
+    <header class="titlebar" id="titlebar">
+      <button id="dateBtn" class="tb-date" title="选择日期" aria-haspopup="dialog">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="4" width="18" height="18" rx="2"/>
+          <line x1="16" y1="2" x2="16" y2="6"/>
+          <line x1="8"  y1="2" x2="8"  y2="6"/>
+          <line x1="3"  y1="10" x2="21" y2="10"/>
+        </svg>
+        <span id="dateLabel">5 月 2 日 · 周六</span>
+      </button>
+
+      <div class="tb-drag"></div>
+
+      <div class="tb-actions">
+        <button id="themeBtn" class="tb-btn" title="切换主题">
+          <svg class="ico-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="4"/>
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+          </svg>
+          <svg class="ico-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+        </button>
+        <button id="settingsBtn" class="tb-btn" title="设置">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+          </svg>
+        </button>
+        <button id="minBtn" class="tb-btn" title="最小化">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round">
+            <line x1="5" y1="12" x2="19" y2="12"/>
+          </svg>
+        </button>
+        <button id="closeBtn" class="tb-btn tb-close" title="隐藏到托盘">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round">
+            <line x1="6" y1="6" x2="18" y2="18"/>
+            <line x1="18" y1="6" x2="6" y2="18"/>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- ============ 主体：任务区 ============ -->
+    <main class="content">
+      <div class="task-area">
+        <ul id="taskList" class="task-list"></ul>
+        <div id="emptyState" class="empty">
+          <div class="empty-emoji">✨</div>
+          <div class="empty-title">这一天还没有任务</div>
+          <div class="empty-sub">在下方添加吧</div>
+        </div>
+      </div>
+    </main>
+
+    <!-- ============ 底部：添加 ============ -->
+    <footer class="composer">
+      <form id="addForm" class="composer-row">
+        <input id="taskInput" type="text" placeholder="添加新任务，回车确认…" maxlength="120" />
+        <span class="enter-hint" aria-hidden="true">↵</span>
+      </form>
+    </footer>
+
+    <!-- ============ 月历弹窗（点击日期触发） ============ -->
+    <div id="calendarPanel" class="calendar-panel" hidden>
+      <div class="cal-head">
+        <button id="calPrev" class="cal-nav" title="上个月">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"/>
+          </svg>
+        </button>
+        <div id="calTitle" class="cal-title">2026 年 5 月</div>
+        <button id="calNext" class="cal-nav" title="下个月">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"/>
+          </svg>
+        </button>
+      </div>
+      <div class="cal-weekdays">
+        <span>一</span><span>二</span><span>三</span><span>四</span>
+        <span>五</span><span>六</span><span class="sun">日</span>
+      </div>
+      <div id="calGrid" class="cal-grid"></div>
+      <div class="cal-foot">
+        <span class="legend"><i class="lg-dot lg-today"></i>今天</span>
+        <span class="legend"><i class="lg-dot lg-has"></i>有任务</span>
+        <button id="calToday" class="ghost-btn">回到今天</button>
+      </div>
+    </div>
+
+    <!-- ============ 设置面板 ============ -->
+    <div id="settingsPanel" class="settings-panel" hidden>
+      <div class="set-head">
+        <span>设置</span>
+        <button id="settingsClose" class="tb-btn" title="关闭">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round">
+            <line x1="6" y1="6" x2="18" y2="18"/>
+            <line x1="18" y1="6" x2="6" y2="18"/>
+          </svg>
+        </button>
+      </div>
+      <div class="set-body">
+
+        <div class="set-group">
+          <div class="set-label">主题模式</div>
+          <div class="seg" id="themeMode">
+            <button data-mode="auto"  class="seg-btn">自动</button>
+            <button data-mode="light" class="seg-btn">亮色</button>
+            <button data-mode="dark"  class="seg-btn">暗色</button>
+          </div>
+        </div>
+
+        <div class="set-group" id="autoTimeGroup">
+          <div class="set-label">自动切换时间</div>
+          <div class="time-row">
+            <label>白天开始<input type="time" id="dayStart" /></label>
+            <label>夜晚开始<input type="time" id="nightStart" /></label>
+          </div>
+          <div class="set-tip">到达时间会平滑切换主题</div>
+        </div>
+
+        <div class="set-group">
+          <div class="switch-row">
+            <div>
+              <div class="set-label">始终置顶</div>
+              <div class="set-tip">让窗口悬浮在其他网页/应用之上</div>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="alwaysOnTop" />
+              <span class="slider"></span>
+            </label>
+          </div>
+        </div>
+
+        <div class="set-group">
+          <div class="switch-row">
+            <div>
+              <div class="set-label">开机自启动</div>
+              <div class="set-tip">系统登录后自动运行</div>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="autoLaunch" />
+              <span class="slider"></span>
+            </label>
+          </div>
+        </div>
+
+        <div class="set-foot">
+          <span>v1.0.0 · 数据保存在本地</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script type="module" src="modules/app.js"></script>
+</body>
+</html>

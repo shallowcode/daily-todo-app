@@ -1,0 +1,123 @@
+/* ================================================================
+ * 月历弹窗（用于切换日期 + 查看哪天有任务）
+ * ================================================================ */
+
+.calendar-panel {
+  position: absolute;
+  top: calc(var(--titlebar-h) + 6px);
+  left: 8px;
+  width: 280px;
+  padding: 12px;
+  z-index: 50;
+  border-radius: 14px;
+  background: var(--window-bg);
+  border: 1px solid var(--line-strong);
+  box-shadow: var(--shadow-window);
+  /* 平滑出入场 */
+  transform-origin: top left;
+  transition: opacity var(--duration-base) var(--ease),
+              transform var(--duration-base) var(--ease-out);
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+.calendar-panel[hidden] {
+  display: block !important;        /* 用透明度做动画 */
+  opacity: 0;
+  transform: translateY(-6px) scale(.96);
+  pointer-events: none;
+}
+
+.cal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+.cal-title {
+  font-size: 13px;
+  font-weight: 600;
+}
+.cal-nav {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  display: grid;
+  place-items: center;
+  color: var(--text-soft);
+  transition: all var(--duration-fast) var(--ease);
+}
+.cal-nav svg { width: 12px; height: 12px; }
+.cal-nav:hover { background: var(--accent-soft); color: var(--accent); }
+
+.cal-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  font-size: 10px;
+  color: var(--text-muted);
+  text-align: center;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 4px;
+  font-weight: 500;
+}
+.cal-weekdays .sun { color: var(--danger); }
+
+.cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
+.cal-cell {
+  aspect-ratio: 1 / 1;
+  display: grid;
+  place-items: center;
+  font-size: 11px;
+  color: var(--text);
+  border-radius: 7px;
+  cursor: pointer;
+  position: relative;
+  font-variant-numeric: tabular-nums;
+  transition: all var(--duration-fast) var(--ease);
+}
+.cal-cell.muted { color: var(--text-muted); opacity: .45; }
+.cal-cell:hover { background: var(--accent-soft); }
+.cal-cell.today {
+  color: #fff;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  box-shadow: 0 3px 10px var(--accent-soft);
+}
+.cal-cell.has-task::after {
+  content: '';
+  position: absolute;
+  bottom: 3px;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+.cal-cell.today.has-task::after { background: #fff; }
+.cal-cell.selected:not(.today) {
+  background: var(--accent-soft);
+  outline: 1.5px solid var(--accent);
+  outline-offset: -1.5px;
+}
+
+.cal-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px solid var(--line);
+  font-size: 10px;
+}
+.legend {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--text-muted);
+}
+.lg-dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; }
+.lg-today { background: linear-gradient(135deg, var(--accent), var(--accent-2)); }
+.lg-has   { background: var(--accent); }

@@ -1,0 +1,80 @@
+/* ================================================================
+ * 主题设计令牌（CSS 变量）
+ * 修改这里即可全局换肤
+ * ================================================================ */
+
+:root {
+  /* ----- 亮色（默认）----- */
+  --bg-1: #f6f8ff;
+  --bg-2: #eef1ff;
+  --window-bg: rgba(248, 250, 255, 0.92);
+  --surface: rgba(255, 255, 255, 0.7);
+  --surface-2: rgba(255, 255, 255, 0.45);
+
+  --text: #1f2340;
+  --text-soft: #5b6079;
+  --text-muted: #8a90a8;
+
+  --line: rgba(31, 35, 64, 0.08);
+  --line-strong: rgba(31, 35, 64, 0.16);
+
+  --accent: #6c5ce7;
+  --accent-2: #00cec9;
+  --accent-soft: rgba(108, 92, 231, 0.10);
+  --danger: #ef4444;
+  --good: #22c55e;
+
+  --shadow-window: 0 18px 60px rgba(76, 86, 167, 0.22);
+  --shadow-card:   0 8px 24px rgba(76, 86, 167, 0.10);
+
+  --radius-window: 16px;
+  --radius-card:   12px;
+  --radius-pill:   999px;
+
+  --titlebar-h: 38px;
+  --footer-h:   58px;
+
+  --duration-fast: 160ms;
+  --duration-base: 280ms;
+  --duration-slow: 480ms;
+  --ease: cubic-bezier(.4, 0, .2, 1);
+  --ease-out: cubic-bezier(.2, .8, .2, 1);
+
+  /* ----- 字体栈 ----- */
+  /* 主字体：英文/数字优先 Inter，中文用 HarmonyOS Sans SC，系统回退 */
+  --font-sans:
+    'Inter',
+    'HarmonyOS Sans SC',
+    'PingFang SC',
+    'Microsoft YaHei UI',
+    'Microsoft YaHei',
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  /* 等宽：用于数字（进度、日期等需对齐的地方） */
+  --font-mono:
+    'Inter', 'JetBrains Mono', 'SF Mono', Consolas, 'Courier New', monospace;
+}
+
+[data-theme="dark"] {
+  --bg-1: #0a0d1f;
+  --bg-2: #060818;
+  --window-bg: rgba(16, 20, 38, 0.92);
+  --surface: rgba(255, 255, 255, 0.05);
+  --surface-2: rgba(255, 255, 255, 0.03);
+
+  --text: #eef0ff;
+  --text-soft: #b3b8d4;
+  --text-muted: #7a82a3;
+
+  --line: rgba(255, 255, 255, 0.08);
+  --line-strong: rgba(255, 255, 255, 0.18);
+
+  --accent: #8b7bff;
+  --accent-2: #2bd6cf;
+  --accent-soft: rgba(139, 123, 255, 0.16);
+  --danger: #f87171;
+  --good: #4ade80;
+
+  --shadow-window: 0 24px 60px rgba(0, 0, 0, 0.55);
+  --shadow-card:   0 8px 24px rgba(0, 0, 0, 0.35);
+}

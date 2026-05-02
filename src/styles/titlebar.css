@@ -1,0 +1,82 @@
+/* ================================================================
+ * 自定义标题栏（无边框窗口需要拖动区）
+ * ================================================================ */
+
+.titlebar {
+  height: var(--titlebar-h);
+  display: flex;
+  align-items: center;
+  padding: 0 6px 0 8px;
+  border-bottom: 1px solid var(--line);
+  flex-shrink: 0;
+  -webkit-app-region: drag;
+  background: transparent;
+}
+
+.tb-drag {
+  flex: 1;
+  height: 100%;
+  -webkit-app-region: drag;
+}
+
+/* 任何按钮、输入都不能是拖动区 */
+.tb-date,
+.tb-actions,
+.tb-actions button {
+  -webkit-app-region: no-drag;
+}
+
+/* ----- 日期按钮 ----- */
+.tb-date {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  border-radius: var(--radius-pill);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text);
+  background: var(--accent-soft);
+  transition: all var(--duration-fast) var(--ease);
+}
+.tb-date svg { width: 13px; height: 13px; color: var(--accent); }
+.tb-date:hover {
+  background: color-mix(in oklab, var(--accent) 16%, transparent);
+  transform: translateY(-1px);
+}
+.tb-date.active {
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #fff;
+}
+.tb-date.active svg { color: #fff; }
+
+/* ----- 标题栏右侧按钮 ----- */
+.tb-actions {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.tb-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  color: var(--text-soft);
+  transition: all var(--duration-fast) var(--ease);
+}
+.tb-btn svg { width: 14px; height: 14px; }
+.tb-btn:hover {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+.tb-close:hover {
+  background: var(--danger);
+  color: #fff;
+}
+
+/* ----- 主题图标显隐 ----- */
+.ico-moon { display: none; }
+[data-theme="dark"] .ico-sun  { display: none; }
+[data-theme="dark"] .ico-moon { display: block; }
